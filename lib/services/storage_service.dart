@@ -14,7 +14,7 @@ import 'package:http/http.dart' as http;
 class StorageService {
   // ⚠️ Remplace ces deux valeurs par les tiennes (voir README, section
   // Cloudinary). Sans ça, les envois échoueront.
-  static const String _cloudName = 'TON_CLOUD_NAME';
+  static const String _cloudName = 'q68kbnq0';
   static const String _uploadPreset = 'icc_chat_unsigned';
 
   Future<String> _upload(File file, {required String resourceType, required String folder}) async {
