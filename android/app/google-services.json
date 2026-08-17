@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "530493202681",
+    "firebase_url": "https://in-crypt-chat-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "in-crypt-chat",
+    "storage_bucket": "in-crypt-chat.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:530493202681:android:7faca8716fdc9b2d928228",
+        "android_client_info": {
+          "package_name": "com.example.in_crypt_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "530493202681-t3do2dmvnn7t91bltc2vn14j1nqiafhl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.in_crypt_chat",
+            "certificate_hash": "01eebd03a19d60fc99f769037cf98259f32da7d8"
+          }
+        },
+        {
+          "client_id": "530493202681-qpcr2bof3n51t3ctpp99hiakvaq9n9bs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpFyVMOguOdtsgBuhXLfa5_ctPGgP2Em0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "530493202681-qpcr2bof3n51t3ctpp99hiakvaq9n9bs.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "530493202681-dth6h29447ajaukcts420vag21te39fn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.inCryptChat"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

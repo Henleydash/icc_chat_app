@@ -1,0 +1,43 @@
+name: in_crypt_chat
+description: Application de messagerie et publications pour les étudiants IN CRYPT Codage.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.13.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+
+  # Firebase
+  firebase_core: ^3.15.2
+  firebase_auth: ^5.7.0
+  cloud_firestore: ^5.6.12
+  google_sign_in: ^6.3.0
+
+  # Envoi d'images et documents (remplace firebase_storage — voir README)
+  http: ^1.2.2
+
+  # UI / fonts
+  google_fonts: ^6.3.3
+  cached_network_image: ^3.4.1
+
+  # Media & files
+  image_picker: ^1.1.2
+  file_picker: ^8.3.7
+
+  # Utilities
+  intl: ^0.20.3
+  uuid: ^4.5.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

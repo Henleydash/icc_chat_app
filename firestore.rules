@@ -1,0 +1,70 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isMe(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    // ---------------- users ----------------
+    match /users/{uid} {
+      // Tout utilisateur connecté peut lire les profils (nécessaire pour
+      // afficher noms/avatars dans les discussions, groupes, publications).
+      allow read: if isSignedIn();
+      // Un utilisateur ne peut créer que son propre document, une seule
+      // fois, à sa première connexion Google (l'unicité et la sécurité du
+      // compte sont garanties par Google / Firebase Auth).
+      allow create: if isMe(uid);
+      allow delete: if false;
+      // Un utilisateur ne peut modifier que son propre profil, et
+      // uniquement son nom affiché et sa photo (jamais son email ni son uid).
+      allow update: if isMe(uid)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['photoUrl', 'username']);
+    }
+
+    // ---------------- chats ----------------
+    match /chats/{chatId} {
+      allow read: if isSignedIn() && request.auth.uid in resource.data.memberIds;
+      allow create: if isSignedIn() && request.auth.uid in request.resource.data.memberIds;
+      allow update: if isSignedIn() && request.auth.uid in resource.data.memberIds;
+      allow delete: if false;
+
+      match /messages/{messageId} {
+        allow read: if isSignedIn()
+          && request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.memberIds;
+        allow create: if isSignedIn()
+          && request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.memberIds
+          && request.resource.data.senderId == request.auth.uid;
+        allow update, delete: if false;
+      }
+    }
+
+    // ---------------- posts (publications façon fil d'actualité) ----------------
+    match /posts/{postId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && request.resource.data.authorId == request.auth.uid;
+      // Autorise l'auteur à modifier son post, ou n'importe quel membre
+      // connecté à changer uniquement le tableau "likes" et "commentCount".
+      allow update: if isSignedIn() && (
+        request.resource.data.authorId == resource.data.authorId &&
+        (
+          request.auth.uid == resource.data.authorId ||
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes']) ||
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['commentCount'])
+        )
+      );
+      allow delete: if isSignedIn() && request.auth.uid == resource.data.authorId;
+
+      match /comments/{commentId} {
+        allow read: if isSignedIn();
+        allow create: if isSignedIn() && request.resource.data.authorId == request.auth.uid;
+        allow update, delete: if false;
+      }
+    }
+  }
+}
